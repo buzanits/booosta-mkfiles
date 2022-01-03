@@ -1,7 +1,11 @@
 <?php
-include_once 'lib/framework.incl.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
-class App extends booosta\usersystem\Webappadmin
+use booosta\Framework as b;
+b::load();
+
+#class App extends booosta\usersystem\Webappadmin
+class App extends booosta\webapp\Webapp
 {
   #protected $fields = 'name,edit,delete';
   #protected $header = 'Name,Edit,Delete';
@@ -16,6 +20,5 @@ class App extends booosta\usersystem\Webappadmin
 
 $app = new App('{name}');
 {super-subtable}
-$app->auth_user();
+#$app->auth_user();
 $app();
-?>

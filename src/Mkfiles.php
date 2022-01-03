@@ -1,6 +1,9 @@
 <?php
 namespace booosta\mkfiles;
 
+use booosta\Framework as b;
+b::load();
+
 class Mkfiles extends \booosta\base\Base
 {
   protected $prefix, $prefix_;
@@ -83,7 +86,7 @@ class Mkfiles extends \booosta\base\Base
     if(!is_dir('tpl')) mkdir('tpl', 0755);
 
     // Template for default
-    $tpl = file_get_contents("vendor/booosta/mkfiles/systpl/{$this->prefix}_default.tpl.tpl");
+    $tpl = file_get_contents("vendor/booosta/mkfiles/src/systpl/{$this->prefix}_default.tpl.tpl");
     $tpl = str_replace('{name}', $param['table'], $tpl);
     $tpl = str_replace('{Name}', ucfirst($param['table']), $tpl);
     if($this->prefix == 'user') $tpl = str_replace('{subtable}', $param['subtable'], $tpl);
@@ -97,19 +100,19 @@ class Mkfiles extends \booosta\base\Base
     $field_name_found = false;
     $first_field = '';
     $idfield = '';
-    $rowtpl = file_get_contents('vendor/booosta/mkfiles/systpl/_new_row.tpl');
+    $rowtpl = file_get_contents('vendor/booosta/mkfiles/src/systpl/_new_row.tpl');
 
     $DATABASE = $this->config('db_database');
     #print "DB: $DATABASE\n";
 
-    $foreignkeys = $this->makeInstance('DB_foreignkeys');
+    $foreignkeys = $this->makeInstance('Db_foreignkeys');
 
     #print_r($foreignkeys);
     #print_r($foreigncolumn);
     $fkfields = [];
     $nullfields = [];
 
-    if(file_exists('vendor/booosta/mkfiles/systpl/rows.incl.php')) include 'vendor/booosta/mkfiles/systpl/rows.incl.php';
+    if(file_exists('vendor/booosta/mkfiles/src/systpl/rows.incl.php')) include 'vendor/booosta/mkfiles/src/systpl/rows.incl.php';
 
     $fields = $this->DB->DB_fields($DATABASE, $param['table']);
     foreach($fields as $field):
@@ -209,7 +212,7 @@ class Mkfiles extends \booosta\base\Base
     endforeach;
 
 
-    $tpl = file_get_contents("vendor/booosta/mkfiles/systpl/{$this->prefix}_new.tpl.tpl");
+    $tpl = file_get_contents("vendor/booosta/mkfiles/src/systpl/{$this->prefix}_new.tpl.tpl");
     if(!$with_date) $tpl = str_replace('{DATEINIT}', '', $tpl);
     $tpl = str_replace('{name}', $param['table'], $tpl);
     $tpl = str_replace('{Name}', ucfirst($param['table']), $tpl);
@@ -229,7 +232,7 @@ class Mkfiles extends \booosta\base\Base
 
     // Template for edit
     $rows = '';
-    $rowtpl = file_get_contents('vendor/booosta/mkfiles/systpl/_edit_row.tpl');
+    $rowtpl = file_get_contents('vendor/booosta/mkfiles/src/systpl/_edit_row.tpl');
 
     foreach($fields as $field):
       if($field->primarykey || $field->name == 'ser__obj') continue;
@@ -316,11 +319,11 @@ class Mkfiles extends \booosta\base\Base
     endforeach;
 
     if($param['subtable']):
-      $tpl = file_get_contents("vendor/booosta/mkfiles/systpl/{$this->prefix}_edit_super.tpl.tpl");
-      $tpl_st = file_get_contents("vendor/booosta/mkfiles/systpl/{$this->prefix}_subtables.tpl.tpl");
+      $tpl = file_get_contents("vendor/booosta/mkfiles/src/systpl/{$this->prefix}_edit_super.tpl.tpl");
+      $tpl_st = file_get_contents("vendor/booosta/mkfiles/src/systpl/{$this->prefix}_subtables.tpl.tpl");
       $superfield = $foreignkeys->local_column($param['subtable'], $param['table']);
     else:
-      $tpl = file_get_contents("vendor/booosta/mkfiles/systpl/{$this->prefix}_edit.tpl.tpl");
+      $tpl = file_get_contents("vendor/booosta/mkfiles/src/systpl/{$this->prefix}_edit.tpl.tpl");
     endif;
 
     if(!$with_date) $tpl = str_replace('{DATEINIT}', '', $tpl);
@@ -349,7 +352,7 @@ class Mkfiles extends \booosta\base\Base
 
     $checkboxes = implode(',', $checkbox_fields);
 
-    $tpl = file_get_contents("vendor/booosta/mkfiles/systpl/{$this->prefix_}main.php.tpl");
+    $tpl = file_get_contents("vendor/booosta/mkfiles/src/systpl/{$this->prefix_}main.php.tpl");
     $tpl = str_replace('{name}', $param['table'], $tpl);
     $tpl = str_replace('{Name}', ucfirst($param['table']), $tpl);
 
