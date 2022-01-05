@@ -158,7 +158,7 @@ class Mkfiles extends \booosta\base\Base
           $tmp = str_replace('{options}', $options, $tmp);
           $row = str_replace('{field}', $tmp, $row);
         else:
-          $row = str_replace('{field}', "{BFORMGRP|$ufield|size::4}{SELECT|$field->name\n$options}{/BFORMGRP}", $row);
+          $row = str_replace('{field}', "{BSELECT|$field->name|texttitle::$ufield\n$options}", $row);
         endif;
       break;
       case 'date':
@@ -271,7 +271,7 @@ class Mkfiles extends \booosta\base\Base
           $tmp = str_replace('{options}', $options, $tmp);
           $row = str_replace('{field}', $tmp, $row);
         else:
-          $row = str_replace('{field}', "{BFORMGRP|$ufield|size::4}{SELECT|$field->name|{*$field->name}\n$options}{/BFORMGRP}", $row);
+          $row = str_replace('{field}', "{SELECT|$field->name|{*$field->name}|texttitle::$ufield\n$options}", $row);
         endif;
       break;
       case 'date':
