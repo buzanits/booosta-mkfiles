@@ -69,6 +69,8 @@ class Mkfiles extends \booosta\base\Base
       #print "0: " . ($argv[0] ?? '') . "\n" .  "1: " . ($argv[1] ?? '') . "\n" .  "2: " . ($argv[2] ?? '') . "\n" .  "3: " . ($argv[3] ?? '') . "\n" .  "4: " . ($argv[4] ?? '') . "\n" .  "5: " . ($argv[5] ?? '') . "\n"; 
       #print "table: {$param['table']}, sub: {$param['subtable']}, super: {$param['supertable']}, prefix: $this->prefix\n"; print_r($param);
 
+      if($param['table'] == '') $param['table'] = readline('table name: ');
+
       if($param['table'] == ''):
         print "Usage: $argv[0] mk{$this->prefix}files tablename [sub_tablename|-] [super_tablename]\n";
         print "or: $argv[0] mk{$this->prefix}files --table=tablename [--subtable=sub_tablename] [--supertable=super_tablename]\n";
