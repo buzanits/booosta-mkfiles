@@ -1,1 +1,0 @@
-../../../systpl/confirm_delete.tpl
