@@ -1,8 +1,7 @@
-{DATEINIT}
 {BBOXCENTER}
 {BPANEL|paneltitle::Edit {Name}}
 
-{BFORMSTART|user_{name}.php}
+{BFORMSTART|user_{name}}
 {HIDDEN|action|editdo}
 {HIDDEN|object_id|{%{idfield}}}
 {HIDDEN|form_token|{%form_token}}
@@ -19,7 +18,7 @@
 {BBOXCENTER|bboxsize::12}
 {BPANEL|paneltitle::{Subname}}
 
-{BLINKADD|New {subtable}|{subscript}?action=new&{superfield}={%{idfield}}}
+{BLINKADD|New {subtable}|{subscript}/new/{%{idfield}}}
 
 {%subliste}
 {/BPANEL}

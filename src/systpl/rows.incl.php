@@ -1,24 +1,22 @@
 <?php
 $rowtpls = [
   'new' => [
-    'text' => '{BTEXTAREA|{fieldname}|40|10|textareatitle::{Fieldname}}',
+    'text' => '{BTEXTAREA|{fieldname}|10|texttitle::{Fieldname}}',
     'tinyint' => '{BCHECKBOX|{fieldname}|texttitle::{Fieldname}}',
-    'enum' => "{BFORMGRP|{Fieldname}|size::4}{SELECT|{fieldname}\n{options}}{/BFORMGRP}",
+    'enum' => "{BSELECT|{fieldname}|texttitle::{Fieldname}\n{options}}",
     'int' => '{BTEXT|{fieldname}|texttitle::{Fieldname}}',
-    'foreignkey' => '{BFORMGRP|{Fieldname}|size::4}{%list{null}_{fieldname}}{/BFORMGRP}',
+    'foreignkey' => '{%list{null}_{fieldname}}',
     'default' => '{BTEXT|{fieldname}|texttitle::{Fieldname}}',
   ],
 
   'edit' => [
-    'text' => "{BTEXTAREA|{fieldname}|40|10|textareatitle::{Fieldname}\n{*{fieldname}}}",
+    'text' => "{BTEXTAREA|{fieldname}|10|texttitle::{Fieldname}\n{*{fieldname}}}",
     'tinyint' => '{BCHECKBOX|{fieldname}|{%{fieldname}}|texttitle::{Fieldname}}',
-    'enum' => "{BFORMGRP|{Fieldname}|size::4}{SELECT|{fieldname}|{%{fieldname}}\n{options}}{/BFORMGRP}",
+    'enum' => "{BSELECT|{fieldname}|{%{fieldname}}|texttitle::{Fieldname}\n{options}}",
     'int' => '{BTEXT|{fieldname}|{*{fieldname}}|texttitle::{Fieldname}}',
-    'foreignkey' => '{BFORMGRP|{Fieldname}|size::4}{%list{null}_{fieldname}}{/BFORMGRP}',
+    'foreignkey' => '{%list{null}_{fieldname}}',
     'default' => '{BTEXT|{fieldname}|{*{fieldname}}|texttitle::{Fieldname}}',
   ],
 
   'menuitem' => "'{tablename}' => '{%base_dir}{scriptname}',",
-  #'menuitem' => '{LINK|{tablename}|{%base_dir}{scriptname}}<br>',
 ];
-?>

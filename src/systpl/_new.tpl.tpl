@@ -1,8 +1,7 @@
-{DATEINIT}
 {BBOXCENTER}
 {BPANEL|paneltitle::New {Name}}
 
-{BFORMSTART|{name}.php}
+{BFORMSTART|{name}}
 {HIDDEN|action|newdo}
 {HIDDEN|form_token|{%form_token}}
 {fkfields}

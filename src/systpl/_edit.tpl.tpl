@@ -1,8 +1,7 @@
-{DATEINIT}
 {BBOXCENTER}
 {BPANEL|paneltitle::Edit {Name}}
 
-{BFORMSTART|{name}.php}
+{BFORMSTART|{name}}
 {HIDDEN|action|editdo}
 {HIDDEN|object_id|{%{idfield}}}
 {HIDDEN|form_token|{%form_token}}

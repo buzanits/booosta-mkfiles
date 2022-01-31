@@ -138,7 +138,7 @@ class Mkfiles extends \booosta\base\Base
           $tmp = str_replace('{Fieldname}', $ufield, $tmp);
           $row = str_replace('{field}', $tmp, $row);
         else:
-          $row = str_replace('{field}', "{BTEXTAREA|$field->name|40|10|textareatitle::$ufield}", $row);
+          $row = str_replace('{field}', "{BTEXTAREA|$field->name|10|texttitle::$ufield}", $row);
         endif;
       break;
       case 'tinyint':
@@ -253,7 +253,7 @@ class Mkfiles extends \booosta\base\Base
           $tmp = str_replace('{Fieldname}', $ufield, $tmp);
           $row = str_replace('{field}', $tmp, $row);
         else:
-          $row = str_replace('{field}', "{BTEXTAREA|$field->name|40|10|textareatitle::$ufield\n{*$field->name}}", $row);
+          $row = str_replace('{field}', "{BTEXTAREA|$field->name|10|texttitle::$ufield\n{*$field->name}}", $row);
         endif;
       break;
       case 'tinyint':
@@ -376,9 +376,15 @@ class Mkfiles extends \booosta\base\Base
       $tpl = str_replace('{subscript}', '', $tpl);
     endif;
 
-    if($param['supertable']) $ssname .= "\$app->set_supername('{$param['supertable']}');\n";
+    if($param['supertable']):
+      $ssname .= "\$app->set_supername('{$param['supertable']}');\n";
+      $urlhandler = "protected \$urlhandler_action_paramlist = ['new' => 'action/{$param['supertable']}'];";
+    endif;
+
     if($this->prefix == 'user' && $param['supertable']) $ssname .= "\$app->set_superscript('user_{$param['supertable']}.php');\n";
+
     $tpl = str_replace('{super-subtable}', $ssname, $tpl);
+    $tpl = str_replace('{sub_urlhandler}', $urlhandler, $tpl);
 
     $code = '';
     foreach($fkfields as $fkfield):
@@ -423,6 +429,7 @@ class Mkfiles extends \booosta\base\Base
       else $tpl = str_replace('{sub_idfield}', '', $tpl);
     else:
       $tpl = str_replace('{sub_idfield}', '', $tpl);
+      $tpl = str_replace('{sub_urlhandler}', '', $tpl);
     endif;
 
     if(sizeof($fkfields)) $tpl = str_replace('{fkfields}', "protected \$foreign_keys = [$code];", $tpl);

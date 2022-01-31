@@ -1,8 +1,7 @@
-{DATEINIT}
 {BBOXCENTER}
 {BPANEL|paneltitle::New {Name}}
 
-{BFORMSTART|user_{name}.php}
+{BFORMSTART|user_{name}}
 {HIDDEN|action|newdo}
 {HIDDEN|form_token|{%form_token}}
 
