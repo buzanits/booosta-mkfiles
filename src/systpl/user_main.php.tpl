@@ -1,5 +1,8 @@
 <?php
-include_once 'lib/framework.incl.php';
+require_once __DIR__ . '/vendor/autoload.php';
+
+use booosta\Framework as b;
+b::load();
 
 class App extends booosta\usersystem\Webappuser
 {
@@ -29,4 +32,3 @@ $app = new App('{name}');
 {super-subtable}
 $app->auth_user();
 $app();
-?>
