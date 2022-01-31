@@ -1,7 +1,7 @@
 {BBOXCENTER bboxsize::12}
 {BPANEL|paneltitle::{Subname}}
 
-{BLINKADD|New {subtable}|{subscript}?action=new&{superfield}={%{idfield}}}
+{BLINKADD|New {subtable}|{subscript}/new/{%{idfield}}}
 
 {%subliste}
 {/BPANEL}
