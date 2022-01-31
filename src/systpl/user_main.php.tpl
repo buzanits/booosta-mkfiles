@@ -26,6 +26,7 @@ class App extends booosta\usersystem\Webappuser
   {sub_key}
   {idfield}
   {sub_idfield}
+  {sub_urlhandler}
 }
 
 $app = new App('{name}');
