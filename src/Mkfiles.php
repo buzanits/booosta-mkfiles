@@ -338,7 +338,7 @@ class Mkfiles extends \booosta\base\Base
     $tpl = str_replace('{rows}', $rows, $tpl);
     $tpl = str_replace('{superfield}', $superfield, $tpl);
     $tpl = str_replace('{subtable}', $param['subtable'], $tpl);
-    $tpl = str_replace('{subscript}', $param['subtable'] ? "{$this->prefix_}{$param['subtable']}.php" : '', $tpl);
+    $tpl = str_replace('{subscript}', $param['subtable'] ? "{$this->prefix_}{$param['subtable']}" : '', $tpl);
     $tpl = str_replace('{Subname}', ucfirst($param['subtable']), $tpl);
     $result = file_put_contents("tpl/{$this->prefix_}{$param['table']}_edit.tpl", $tpl);
     if($result === false) $this->raise_error("Could not write tpl/{$this->prefix_}{$param['table']}_edit.tpl");
@@ -349,7 +349,7 @@ class Mkfiles extends \booosta\base\Base
     $tpl = str_replace('{rows}', $rows, $tpl);
     $tpl = str_replace('{superfield}', $superfield, $tpl);
     $tpl = str_replace('{subtable}', $param['subtable'], $tpl);
-    $tpl = str_replace('{subscript}', $param['subtable'] ? "{$this->prefix_}{$param['subtable']}.php" : '', $tpl);
+    $tpl = str_replace('{subscript}', $param['subtable'] ? "{$this->prefix_}{$param['subtable']}" : '', $tpl);
     $tpl = str_replace('{Subname}', ucfirst($param['subtable']), $tpl);
     $result = file_put_contents("tpl/{$this->prefix_}{$param['table']}_subtables.tpl", $tpl);
     if($result === false) $this->raise_error("Could not write tpl/{$this->prefix_}{$param['table']}_subtables.tpl");
@@ -371,7 +371,7 @@ class Mkfiles extends \booosta\base\Base
     $ssname = '';
     if($param['subtable']):
       $ssname .= "\$app->set_subname('{$param['subtable']}');\n";
-      $tpl = str_replace('{subscript}', "protected \$subscript = 'user_{$param['subtable']}.php';", $tpl);
+      $tpl = str_replace('{subscript}', "protected \$subscript = 'user_{$param['subtable']}';", $tpl);
     else:
       $tpl = str_replace('{subscript}', '', $tpl);
     endif;
@@ -381,7 +381,7 @@ class Mkfiles extends \booosta\base\Base
       $urlhandler = "protected \$urlhandler_action_paramlist = ['new' => 'action/{$param['supertable']}'];";
     endif;
 
-    if($this->prefix == 'user' && $param['supertable']) $ssname .= "\$app->set_superscript('user_{$param['supertable']}.php');\n";
+    if($this->prefix == 'user' && $param['supertable']) $ssname .= "\$app->set_superscript('user_{$param['supertable']}');\n";
 
     $tpl = str_replace('{super-subtable}', $ssname, $tpl);
     $tpl = str_replace('{sub_urlhandler}', $urlhandler, $tpl);
@@ -453,10 +453,10 @@ class Mkfiles extends \booosta\base\Base
       if(isset($rowtpls['menuitem'])):
         $linkcode = $rowtpls['menuitem'];
         $linkcode = str_replace('{tablename}', $tablename, $linkcode);
-        $linkcode = str_replace('{scriptname}', "{$this->prefix_}{$param['table']}.php", $linkcode);
+        $linkcode = str_replace('{scriptname}', "{$this->prefix_}{$param['table']}", $linkcode);
         $code = str_replace('###menuitems###', "$linkcode\n            ###menuitems###", $code);
       else:
-        $code = str_replace('###menuitems###', "<li>{LINK|$tablename|{%base_dir}{$this->prefix_}{$param['table']}.php}</li>\n            ###menuitems###", $code);
+        $code = str_replace('###menuitems###', "<li>{LINK|$tablename|{%base_dir}{$this->prefix_}{$param['table']}}</li>\n            ###menuitems###", $code);
       endif;
 
       $result = file_put_contents($file, $code);
