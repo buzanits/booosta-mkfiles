@@ -18,5 +18,5 @@ $rowtpls = [
     'default' => '{BTEXT|{fieldname}|{*{fieldname}}|texttitle::{Fieldname}}',
   ],
 
-  'menuitem' => "'{tablename}' => '{%base_dir}{scriptname}',",
+  'menuitem' => "'{tablename}' => '{scriptname}',",
 ];
