@@ -15,6 +15,15 @@ class Mkfiles extends \booosta\base\Base
     if($prefix) $this->prefix_ = $prefix . '_'; else $this->prefix_ = '';
   } 
 
+  protected static function readline($prompt = null)
+  {
+    if($prompt) echo $prompt;
+    $fp = fopen("php://stdin","r");
+    $line = rtrim(fgets($fp, 1024));
+    return $line;
+  }
+
+
   public function set_param($param) { $this->param = $param; }
 
   private function raise_error($msg)
@@ -49,7 +58,7 @@ class Mkfiles extends \booosta\base\Base
 
     if(php_sapi_name() == 'cli'):
       $param = [];
-      if(strstr($argv[3], '=')):     // parameters with = like table=customer
+      if(strstr($argv[3] ?? '', '=')):     // parameters with = like table=customer
         foreach($argv as $i=>$arg):
           if($i < 3) continue;
           list($var, $val) = explode('=', $arg);
@@ -69,9 +78,9 @@ class Mkfiles extends \booosta\base\Base
       #print "0: " . ($argv[0] ?? '') . "\n" .  "1: " . ($argv[1] ?? '') . "\n" .  "2: " . ($argv[2] ?? '') . "\n" .  "3: " . ($argv[3] ?? '') . "\n" .  "4: " . ($argv[4] ?? '') . "\n" .  "5: " . ($argv[5] ?? '') . "\n"; 
       #print "table: {$param['table']}, sub: {$param['subtable']}, super: {$param['supertable']}, prefix: $this->prefix\n"; print_r($param);
 
-      if($param['table'] == '') $param['table'] = readline('table name: ');
-      if($param['subtable'] == '') $param['subtable'] = readline('subtable name: ');
-      if($param['supertable'] == '') $param['supertable'] = readline('supertable name: ');
+      if($param['table'] == '') $param['table'] = self::readline('table name: ');
+      if($param['subtable'] == '') $param['subtable'] = self::readline('subtable name: ');
+      if($param['supertable'] == '') $param['supertable'] = self::readline('supertable name: ');
 
       if($param['table'] == ''):
         print "Usage: $argv[0] mk{$this->prefix}files tablename [sub_tablename|-] [super_tablename]\n";
@@ -343,7 +352,7 @@ class Mkfiles extends \booosta\base\Base
     $result = file_put_contents("tpl/{$this->prefix_}{$param['table']}_edit.tpl", $tpl);
     if($result === false) $this->raise_error("Could not write tpl/{$this->prefix_}{$param['table']}_edit.tpl");
 
-    $tpl = str_replace('{idfield}', $idfield ? $idfield : 'id', $tpl_st);
+    $tpl = str_replace('{idfield}', $idfield ? $idfield : 'id', $tpl_st ?? '');
     $tpl = str_replace('{name}', $param['table'], $tpl);
     $tpl = str_replace('{Name}', ucfirst($param['table']), $tpl);
     $tpl = str_replace('{rows}', $rows, $tpl);
@@ -370,21 +379,23 @@ class Mkfiles extends \booosta\base\Base
 
     $ssname = '';
     if($param['subtable']):
-      $ssname .= "\$app->set_subname('{$param['subtable']}');\n";
+      #$ssname .= "\$app->set_subname('{$par['subtable']}');\n";
+      $ssname .= "  protected \$subname = '{$param['subtable']}';\n";
       $tpl = str_replace('{subscript}', "protected \$subscript = 'user_{$param['subtable']}';", $tpl);
     else:
       $tpl = str_replace('{subscript}', '', $tpl);
     endif;
 
     if($param['supertable']):
-      $ssname .= "\$app->set_supername('{$param['supertable']}');\n";
+      #$ssname .= "\$app->set_supername('{$param['supertable']}');\n";
+      $ssname .= "  protected \$supername = '{$param['supertable']}';\n";
       $urlhandler = "protected \$urlhandler_action_paramlist = ['new' => 'action/{$param['supertable']}'];";
     endif;
 
     if($this->prefix == 'user' && $param['supertable']) $ssname .= "\$app->set_superscript('user_{$param['supertable']}');\n";
 
-    $tpl = str_replace('{super-subtable}', $ssname, $tpl);
-    $tpl = str_replace('{sub_urlhandler}', $urlhandler, $tpl);
+    $tpl = str_replace('{super-subtable}', $ssname ?? '', $tpl);
+    $tpl = str_replace('{sub_urlhandler}', $urlhandler ?? '', $tpl);
 
     $code = '';
     foreach($fkfields as $fkfield):
