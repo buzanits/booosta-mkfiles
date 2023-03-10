@@ -392,7 +392,7 @@ class Mkfiles extends \booosta\base\Base
       $urlhandler = "protected \$urlhandler_action_paramlist = ['new' => 'action/{$param['supertable']}'];";
     endif;
 
-    if($this->prefix == 'user' && $param['supertable']) $ssname .= "\$app->set_superscript('user_{$param['supertable']}');\n";
+    if($this->prefix == 'user' && $param['supertable']) $ssname .= "  protected \$superscript = 'user_{$param['supertable']}';\n";
 
     $tpl = str_replace('{super-subtable}', $ssname ?? '', $tpl);
     $tpl = str_replace('{sub_urlhandler}', $urlhandler ?? '', $tpl);
