@@ -9,6 +9,8 @@ class App extends booosta\usersystem\Webappadmin
   #protected $fields = 'name,edit,delete';
   #protected $header = 'Name,Edit,Delete';
   protected $use_subtablelink = false;
+  #protected $urlhandler_action_paramlist = ['test' => 'action/id'];
+{super-subtable}
   {fkfields}
   {checkbox_fields}
   {nullfields}
@@ -19,6 +21,5 @@ class App extends booosta\usersystem\Webappadmin
 }
 
 $app = new App('{name}');
-{super-subtable}
 $app->auth_user();
 $app();

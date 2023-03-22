@@ -5,7 +5,7 @@ $rowtpls = [
     'tinyint' => '{BCHECKBOX|{fieldname}|texttitle::{Fieldname}}',
     'enum' => "{BSELECT|{fieldname}|texttitle::{Fieldname}\n{options}}",
     'int' => '{BTEXT|{fieldname}|texttitle::{Fieldname}}',
-    'foreignkey' => '{%list{null}_{fieldname}}',
+    'foreignkey' => '{BFORMGRP|{Fieldname}}{%list{null}_{fieldname}}{/BFORMGRP}',
     'default' => '{BTEXT|{fieldname}|texttitle::{Fieldname}}',
   ],
 
@@ -14,7 +14,7 @@ $rowtpls = [
     'tinyint' => '{BCHECKBOX|{fieldname}|{%{fieldname}}|texttitle::{Fieldname}}',
     'enum' => "{BSELECT|{fieldname}|{%{fieldname}}|texttitle::{Fieldname}\n{options}}",
     'int' => '{BTEXT|{fieldname}|{*{fieldname}}|texttitle::{Fieldname}}',
-    'foreignkey' => '{%list{null}_{fieldname}}',
+    'foreignkey' => '{BFORMGRP|{Fieldname}}{%list{null}_{fieldname}}{/BFORMGRP}',
     'default' => '{BTEXT|{fieldname}|{*{fieldname}}|texttitle::{Fieldname}}',
   ],
 

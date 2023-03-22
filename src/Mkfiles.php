@@ -175,6 +175,7 @@ class Mkfiles extends \booosta\base\Base
         endif;
       break;
       case 'date':
+      case 'datetime':
         if(isset($rowtpls['new']['date'])):
           $tmp = str_replace('{fieldname}', $field->name, $rowtpls['new']['date']);
           $tmp = str_replace('{Fieldname}', $ufield, $tmp);
@@ -226,7 +227,6 @@ class Mkfiles extends \booosta\base\Base
 
 
     $tpl = file_get_contents("vendor/booosta/mkfiles/src/systpl/{$this->prefix}_new.tpl.tpl");
-    if(!$with_date) $tpl = str_replace('{DATEINIT}', '', $tpl);
     $tpl = str_replace('{name}', $param['table'], $tpl);
     $tpl = str_replace('{Name}', ucfirst($param['table']), $tpl);
     if($this->prefix == 'user') $tpl = str_replace('{subtable}', $param['subtable'], $tpl);
@@ -288,6 +288,7 @@ class Mkfiles extends \booosta\base\Base
         endif;
       break;
       case 'date':
+      case 'datetime':
         if(isset($rowtpls['edit']['date'])):
           $tmp = str_replace('{fieldname}', $field->name, $rowtpls['edit']['date']);
           $tmp = str_replace('{Fieldname}', $ufield, $tmp);
@@ -339,13 +340,11 @@ class Mkfiles extends \booosta\base\Base
       $tpl = file_get_contents("vendor/booosta/mkfiles/src/systpl/{$this->prefix}_edit.tpl.tpl");
     endif;
 
-    if(!$with_date) $tpl = str_replace('{DATEINIT}', '', $tpl);
-
     $tpl = str_replace('{idfield}', $idfield ? $idfield : 'id', $tpl);
     $tpl = str_replace('{name}', $param['table'], $tpl);
     $tpl = str_replace('{Name}', ucfirst($param['table']), $tpl);
     $tpl = str_replace('{rows}', $rows, $tpl);
-    $tpl = str_replace('{superfield}', $superfield, $tpl);
+    $tpl = str_replace('{superfield}', $superfield ?? '', $tpl);
     $tpl = str_replace('{subtable}', $param['subtable'], $tpl);
     $tpl = str_replace('{subscript}', $param['subtable'] ? "{$this->prefix_}{$param['subtable']}" : '', $tpl);
     $tpl = str_replace('{Subname}', ucfirst($param['subtable']), $tpl);
@@ -356,7 +355,7 @@ class Mkfiles extends \booosta\base\Base
     $tpl = str_replace('{name}', $param['table'], $tpl);
     $tpl = str_replace('{Name}', ucfirst($param['table']), $tpl);
     $tpl = str_replace('{rows}', $rows, $tpl);
-    $tpl = str_replace('{superfield}', $superfield, $tpl);
+    $tpl = str_replace('{superfield}', $superfield ?? '', $tpl);
     $tpl = str_replace('{subtable}', $param['subtable'], $tpl);
     $tpl = str_replace('{subscript}', $param['subtable'] ? "{$this->prefix_}{$param['subtable']}" : '', $tpl);
     $tpl = str_replace('{Subname}', ucfirst($param['subtable']), $tpl);
@@ -392,7 +391,7 @@ class Mkfiles extends \booosta\base\Base
       $urlhandler = "protected \$urlhandler_action_paramlist = ['new' => 'action/{$param['supertable']}'];";
     endif;
 
-    if($this->prefix == 'user' && $param['supertable']) $ssname .= "\$app->set_superscript('user_{$param['supertable']}');\n";
+    if($this->prefix == 'user' && $param['supertable']) $ssname .= "  protected \$superscript = 'user_{$param['supertable']}';\n";
 
     $tpl = str_replace('{super-subtable}', $ssname ?? '', $tpl);
     $tpl = str_replace('{sub_urlhandler}', $urlhandler ?? '', $tpl);
