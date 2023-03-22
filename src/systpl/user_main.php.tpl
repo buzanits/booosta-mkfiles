@@ -15,6 +15,7 @@ class App extends booosta\usersystem\Webappuser
   #protected $sub_fields = 'name,edit,delete';
   #protected $use_datatable = true;
   protected $use_subtablelink = false;
+{super-subtable}
 
   {fkfields}
   {checkbox_fields}
@@ -30,6 +31,5 @@ class App extends booosta\usersystem\Webappuser
 }
 
 $app = new App('{name}');
-{super-subtable}
 $app->auth_user();
 $app();
