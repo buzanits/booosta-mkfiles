@@ -6,13 +6,20 @@ b::load();
 
 class Mkfiles extends \booosta\base\Base
 {
-  protected $prefix, $prefix_;
+  protected $prefix, $prefix_, $usertype;
 
   public function __construct($prefix = '')
   {
     parent::__construct();
     $this->prefix = $prefix;
-    if($prefix) $this->prefix_ = $prefix . '_'; else $this->prefix_ = '';
+
+    if($prefix):
+      $this->prefix_ = $prefix . '_'; 
+      $this->usertype = $prefix;
+    else:
+      $this->prefix_ = '';
+      $this->usertype = 'adminuser';
+    endif;
   } 
 
   protected static function readline($prompt = null)
@@ -103,8 +110,9 @@ class Mkfiles extends \booosta\base\Base
     $tpl = str_replace('{name}', $param['table'], $tpl);
     $tpl = str_replace('{Name}', ucfirst($param['table']), $tpl);
     if($this->prefix == 'user') $tpl = str_replace('{subtable}', $param['subtable'], $tpl);
-    $result = file_put_contents("tpl/{$this->prefix_}{$param['table']}_default.tpl", $tpl);
-    if($result === false) $this->raise_error("Could not write tpl/{$this->prefix_}{$param['table']}_default.tpl");
+    #$result = file_put_contents("tpl/{$this->prefix_}{$param['table']}_default.tpl", $tpl);
+    $result = file_put_contents("tpl/lang-en/type-{$this->usertype}/{$param['table']}_default.tpl", $tpl);
+    if($result === false) $this->raise_error("Could not write tpl/lang-en/type-{$this->usertype}/{$param['table']}_default.tpl");
 
     // Template for new
     $rows = '';
@@ -239,8 +247,10 @@ class Mkfiles extends \booosta\base\Base
       $tpl = str_replace('{fkfields}', '', $tpl);
     endif;
 
-    $result = file_put_contents("tpl/{$this->prefix_}{$param['table']}_new.tpl", $tpl);
-    if($result === false) $this->raise_error("Could not write tpl/{$this->prefix_}{$param['table']}_new.tpl");
+    $result = file_put_contents("tpl/lang-en/type-{$this->usertype}/{$param['table']}_new.tpl", $tpl);
+    if($result === false) $this->raise_error("Could not write tpl/lang-en/type-{$this->usertype}/{$param['table']}_new.tpl");
+    #$result = file_put_contents("tpl/{$this->prefix_}{$param['table']}_new.tpl", $tpl);
+    #if($result === false) $this->raise_error("Could not write tpl/{$this->prefix_}{$param['table']}_new.tpl");
 
 
     // Template for edit
@@ -348,8 +358,9 @@ class Mkfiles extends \booosta\base\Base
     $tpl = str_replace('{subtable}', $param['subtable'], $tpl);
     $tpl = str_replace('{subscript}', $param['subtable'] ? "{$this->prefix_}{$param['subtable']}" : '', $tpl);
     $tpl = str_replace('{Subname}', ucfirst($param['subtable']), $tpl);
-    $result = file_put_contents("tpl/{$this->prefix_}{$param['table']}_edit.tpl", $tpl);
-    if($result === false) $this->raise_error("Could not write tpl/{$this->prefix_}{$param['table']}_edit.tpl");
+    $result = file_put_contents("tpl/lang-en/type-{$this->usertype}/{$param['table']}_edit.tpl", $tpl);
+    #$result = file_put_contents("tpl/{$this->prefix_}{$param['table']}_edit.tpl", $tpl);
+    if($result === false) $this->raise_error("Could not write tpl/lang-en/type-{$this->usertype}/{$param['table']}_edit.tpl");
 
     $tpl = str_replace('{idfield}', $idfield ? $idfield : 'id', $tpl_st ?? '');
     $tpl = str_replace('{name}', $param['table'], $tpl);
@@ -359,8 +370,9 @@ class Mkfiles extends \booosta\base\Base
     $tpl = str_replace('{subtable}', $param['subtable'], $tpl);
     $tpl = str_replace('{subscript}', $param['subtable'] ? "{$this->prefix_}{$param['subtable']}" : '', $tpl);
     $tpl = str_replace('{Subname}', ucfirst($param['subtable']), $tpl);
-    $result = file_put_contents("tpl/{$this->prefix_}{$param['table']}_subtables.tpl", $tpl);
-    if($result === false) $this->raise_error("Could not write tpl/{$this->prefix_}{$param['table']}_subtables.tpl");
+    $result = file_put_contents("tpl/lang-en/type-{$this->usertype}/{$param['table']}_subtables.tpl", $tpl);
+    #$result = file_put_contents("tpl/{$this->prefix_}{$param['table']}_subtables.tpl", $tpl);
+    if($result === false) $this->raise_error("Could not write tpl/lang-en/type-{$this->usertype}/{$param['table']}_subtables.tpl");
 
     $checkboxes = implode(',', $checkbox_fields);
 
